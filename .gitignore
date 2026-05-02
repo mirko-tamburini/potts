@@ -1,0 +1,9 @@
+# IDE settings
+.vscode/
+
+# Compiled Binaries
+*.o
+potts     
+
+# Data outputs
+*.dat
