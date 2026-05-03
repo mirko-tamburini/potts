@@ -1,4 +1,5 @@
-#include "utils/metro.h"
+#include <math.h>
+#include "metro.h"
 
 void update_metropolis(Lattice *lattice, const Parameters *parameters, Ran2Generator *rng) {
       int accepted_moves = 0;

@@ -1,5 +1,7 @@
-#include "utils/config.h"
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h> 
+#include "config.h"
 
 void geometry(Lattice *lattice) {
       /*
@@ -17,7 +19,8 @@ void geometry(Lattice *lattice) {
       lattice->nmm[0] = N_LATT - 1;  // conditions
 }
 
-void initialize_lattice(Lattice *lattice, const Parameters *parameters, Ran2Generator *rng, FILE *pLatt) {
+void initialize_lattice(Lattice *lattice, const Parameters *parameters, 
+                        Ran2Generator *rng, const char *filename) {
       // COLD START -> the ground state is degenerate:
       //                            1) all spins = 0
       //                            2) all spins = 1
@@ -44,7 +47,7 @@ void initialize_lattice(Lattice *lattice, const Parameters *parameters, Ran2Gene
 
       // ... or starting from the previous lattice configuration
       else {
-            pLatt = fopen("lattice", "r");
+            FILE *pLatt = fopen(filename, "r");
             if(pLatt == NULL) {
                   printf("Lattice file can't be found.\n");
                   return;

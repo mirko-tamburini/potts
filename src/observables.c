@@ -1,4 +1,5 @@
-#include "utils/observables.h"
+#include <math.h>
+#include "observables.h"
 
 void magnetization(Lattice *lattice, FILE *pOut) {
       double xmagn_real = 0.0;
@@ -17,7 +18,7 @@ void magnetization(Lattice *lattice, FILE *pOut) {
       fprintf(pOut, "%lf %lf %lf ", xmagn_real, xmagn_imag, magn_abs);
 }
 
-void energy(Lattice *lattice, const Parameters *parameters, FILE *pOut) {
+void energy(Lattice *lattice, FILE *pOut) {
       double xene = 0.0;
       
       for(int i = 0; i < N_LATT; i++) {

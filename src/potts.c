@@ -5,12 +5,12 @@
 */
 
 #include <stdio.h>
-#include <math.h>
 #include <time.h>
 #include <stdlib.h>
-#include "utils/random.h"
-#include "utils/config.h"
-#include "utils/metro.h"
+#include "random.h"
+#include "config.h"
+#include "metro.h"
+#include "observables.h"
 
 int main() {
       clock_t start = clock();
@@ -20,10 +20,10 @@ int main() {
       Ran2Generator rng;
 
       FILE *pOut;
-      FILE *pLatt;
 
       const char *in_file = "parameters.json";
       const char *out_file = "measures";
+      const char *latt_file = "lattice";
 
       read_parameters(&parameters, in_file);
 
@@ -34,7 +34,7 @@ int main() {
 
       // PRELIMINARY OPERATIONS
       geometry(&lattice);
-      initialize_lattice(&lattice, &parameters, &rng, pLatt);
+      initialize_lattice(&lattice, &parameters, &rng, latt_file);
 
       // THERMALIZATION
       for(int i = 0; i < parameters.i_term; i++) {
@@ -47,7 +47,7 @@ int main() {
                   update_metropolis(&lattice, &parameters, &rng);
             }
             magnetization(&lattice, pOut);
-            energy(&lattice, &parameters, pOut);
+            energy(&lattice, pOut);
       }
 
       fclose(pOut);
@@ -57,7 +57,7 @@ int main() {
       TO POSSIBLY RESTART FROM THIS SITUATION
       */
 
-      pLatt = fopen("lattice", "w");
+      FILE *pLatt = fopen(latt_file, "w");
 
       for(int i = 0; i < N_LATT; i++) {
             for(int j = 0; j < N_LATT; j++) {
