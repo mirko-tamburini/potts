@@ -1,6 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <stdio.h>
 #include "random.h"
 
 #define N_LATT 90
@@ -19,7 +20,7 @@ typedef struct {
 } Parameters;
 
 void geometry(Lattice *lattice);
-void initialize_lattice(Lattice *lattice, const Parameters *parameters, Ran2Generator *rng, FILE *pLatt);
+void initialize_lattice(Lattice *lattice, const Parameters *parameters, Ran2Generator *rng, const char *filename);
 void read_parameters(Parameters *parameters, const char *filename);
 
 #endif
