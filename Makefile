@@ -21,6 +21,9 @@ TARGET = potts_sim
 
 all: $(TARGET)
 
+run: all
+	./$(TARGET)
+
 # Link the executable
 $(TARGET): $(OBJS)
 	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS)
