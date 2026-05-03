@@ -19,18 +19,16 @@ int main() {
       Parameters parameters;
       Ran2Generator rng;
 
-      FILE *pOut;
-
-      const char *in_file = "parameters.json";
-      const char *out_file = "measures";
-      const char *latt_file = "lattice";
+      const char *in_file = "params.dat";
+      const char *out_file = "measures.dat";
+      const char *latt_file = "lattice.dat";
 
       read_parameters(&parameters, in_file);
 
       ranstart(&rng);
       
       // OUTPUT FILE TO STORE THE MAGNETIZATION AND ENERGY
-      pOut = fopen(out_file, "w"); 
+      FILE *pOut = fopen(out_file, "w"); 
 
       // PRELIMINARY OPERATIONS
       geometry(&lattice);
@@ -49,7 +47,6 @@ int main() {
             magnetization(&lattice, pOut);
             energy(&lattice, pOut);
       }
-
       fclose(pOut);
 
       /*
@@ -65,8 +62,8 @@ int main() {
             }
             fprintf(pLatt, "\n");
       }
-
       fclose(pLatt);
+
       ranfinish(&rng);
 
       clock_t end = clock();
