@@ -9,6 +9,7 @@ UTILS_DIR = utils
 INC_DIR   = include
 OBJ_DIR   = obj
 BIN_DIR   = bin
+OUT_DIR   = output
 
 # --- Target ---
 TARGET = $(BIN_DIR)/potts_sim
@@ -45,12 +46,15 @@ $(OBJ_DIR):
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
+$(OUT_DIR):
+	mkdir -p $(OUT_DIR)
+
 # Run the simulation
-run: all
+run: all | $(OUT_DIR)
 	./$(TARGET)
 
 # Professional 'clean' rule
 clean:
-	rm -rf $(OBJ_DIR) $(BIN_DIR)
+	rm -rf $(OBJ_DIR) $(BIN_DIR) $(OUT_DIR)
 
 .PHONY: all clean run
