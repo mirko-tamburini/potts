@@ -1,13 +1,10 @@
 # IDE settings
 .vscode/
 
-# Compiled binaries
-potts_sim
-potts_sim.exe
+# Ignore all build artifacts
+bin/*
+obj/*
+*.o
 
-# Objects and dependency files
-obj/
-*.o 
-
-# Data outputs
-*.dat
+# Ignore simulation results
+output/*
