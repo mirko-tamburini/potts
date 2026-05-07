@@ -19,8 +19,8 @@ void geometry(Lattice *lattice) {
       lattice->nmm[0] = N_LATT - 1;  // conditions
 }
 
-void initialize_lattice(Lattice *lattice, const Parameters *parameters, 
-                        Ran2Generator *rng, const char *filename) {
+void initialize_lattice(Lattice *lattice, const Params *parameters, 
+                        Ran2Generator *rng, const char *latt_file) {
       // COLD START -> the ground state is degenerate:
       //                            1) all spins = 0
       //                            2) all spins = 1
@@ -47,7 +47,7 @@ void initialize_lattice(Lattice *lattice, const Parameters *parameters,
 
       // ... or starting from the previous lattice configuration
       else {
-            FILE *pLatt = fopen(filename, "r");
+            FILE *pLatt = fopen(latt_file, "r");
             if(pLatt == NULL) {
                   printf("Lattice file can't be found.\n");
                   return;
@@ -70,10 +70,10 @@ void initialize_lattice(Lattice *lattice, const Parameters *parameters,
       }      
 }
 
-void read_parameters(Parameters *parameters, const char *filename){
-      FILE *fp = fopen(filename, "rb");
-      if (fp == NULL) {
-            printf("Error: Unable to open the file %s.\n", filename);
+void read_parameters(Params *parameters, const char *params_file){
+      FILE *pParams = fopen(params_file, "rb");
+      if (pParams == NULL) {
+            printf("Error: Unable to open the file %s.\n", params_file);
             exit(1);
       }
 
@@ -81,7 +81,7 @@ void read_parameters(Parameters *parameters, const char *filename){
       char key[64];
       double val;
 
-      while (fgets(line, sizeof(line), fp)) {
+      while (fgets(line, sizeof(line), pParams)) {
             // Skip comments or empty lines
             if (line[0] == '#' || line[0] == '\n') continue;
 
@@ -95,5 +95,5 @@ void read_parameters(Parameters *parameters, const char *filename){
                   else if (strcmp(key, "beta") == 0)       parameters->beta = val;
             }
       }
-      fclose(fp);
+      fclose(pParams);
 }
