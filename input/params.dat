@@ -1,0 +1,9 @@
+# Potts Model Simulation Parameters
+# Format: [key] [value]
+
+iflag       1
+measures    10000
+i_decorrel  10
+i_term      100
+extfield    0.0
+beta        0.440687
