@@ -13,7 +13,7 @@ The system consists of a 2D square lattice of classical spins that can take thre
 
 ### Input Files
 To run a simulation, the executable requires two files located in the `input/` directory:
-1.  **`randomseed`**: Contains the seed for the random number generator (a negative integer or a small block of integers).
+1.  **`randomseed`**: Contains the seed for the random number generator (i.e., a negative integer or a small block of integers).
 2.  **`params.dat`**: Defines the system configuration (lattice size, temperature, etc.) and Monte Carlo parameters (number of measures, decorrelation steps, etc.).
 
 *Template examples are provided in the `input/` folder.*
@@ -22,10 +22,26 @@ To run a simulation, the executable requires two files located in the `input/` d
 This project includes a **Makefile** to automate the build process, organizing object files into `obj/` and the final executable into `bin/`.
 
 ### Output and Data Analysis
-The outcome of the simulation are saved in a new folder called `output/`, which comprises of two files: a **`lattice.dat`** file, containing the spin configuration of the last step of the Markov Chain, and a **`measures.dat`** file, with the measures of the magnetization and energy density computed once every `i_decorrel` steps of the Markov Chain. Specifically, the latter file has four columns representing, respectively, the **real value**, the **imaginary value**, and the **absolute value** of the magnetization density, and **energy density** of the system evaluated at a given Markov Chain step.
+The outcome of the simulation are saved in a new folder called `output/`, which comprises of two files: a **`lattice.dat`** file, containing the spin configuration corresponding to the last step of the Markov Chain, and a **`measures.dat`** file, with measures of the magnetization and energy density computed once every `i_decorrel` steps of the Markov Chain. Specifically, the latter file has four columns representing, respectively, the **real value**, the **imaginary value**, and the **absolute value** of the **magnetization density**, and the **energy density** of the system evaluated at a given Markov Chain step.
 
 #### Linux / Unix / MacOS / Git Bash:
 To compile the code:
 ```bash
 make
+```
 
+To run the simulation:
+```bash
+make run
+```
+
+#### Windows (using Git Bash and MinGW)
+To compile the code:
+```bash
+mingw32-make
+```
+
+To run the simulation:
+```bash
+mingw32-make run
+```
