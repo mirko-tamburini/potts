@@ -1,7 +1,7 @@
 #include <math.h>
 #include "metro.h"
 
-void update_metropolis(Lattice *lattice, const Parameters *parameters, Ran2Generator *rng) {
+void update_metropolis(Lattice *lattice, const Params *parameters, Ran2Generator *rng) {
       int accepted_moves = 0;
 
       for(int ivol = 0; ivol < N_VOL; ivol++) {

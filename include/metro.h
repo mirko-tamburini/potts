@@ -5,6 +5,6 @@
 #include "random.h"
 #include "config.h"
 
-void update_metropolis(Lattice *lattice, const Parameters *parameters, Ran2Generator *rng);
+void update_metropolis(Lattice *lattice, const Params *parameters, Ran2Generator *rng);
 
 #endif
