@@ -16,38 +16,48 @@ int main() {
       clock_t start = clock();
 
       Lattice lattice;
-      Parameters parameters;
+      Params params;
       Ran2Generator rng;
 
-      const char *in_file = "params.dat";
-      const char *out_file = "measures.dat";
-      const char *latt_file = "lattice.dat";
+      const char *params_file = "input/params.dat";
+      const char *seed_file = "input/randomseed";
+      const char *meas_file = "output/measures.dat";
+      const char *latt_file = "output/lattice.dat";
 
-      read_parameters(&parameters, in_file);
+      read_parameters(&params, params_file);
 
-      ranstart(&rng);
+      ranstart(&rng, seed_file);
       
-      // OUTPUT FILE TO STORE THE MAGNETIZATION AND ENERGY
-      FILE *pOut = fopen(out_file, "w"); 
+      // OUTPUT FILE TO STORE THE MAGNETIZATION AND ENERGY DENSITY
+      FILE *pMeas = fopen(meas_file, "w"); 
+      fprintf(pMeas, "%s %s %s\t %s\t %s\t %s\n", "#", "Step", "Magn_Real", "Magn_Img", "Magn_Abs", "Ene");
 
       // PRELIMINARY OPERATIONS
       geometry(&lattice);
-      initialize_lattice(&lattice, &parameters, &rng, latt_file);
+      initialize_lattice(&lattice, &params, &rng, latt_file);
 
       // THERMALIZATION
-      for(int i = 0; i < parameters.i_term; i++) {
-            update_metropolis(&lattice, &parameters, &rng);
+      int MC_step = 0;
+      for(int i = 0; i < params.i_term; i++) {
+            update_metropolis(&lattice, &params, &rng);
+            MC_step++;
       }
 
       // IN-EQUILIBRIUM SESSION WITH MEASURES
-      for(int i = 0; i < parameters.measures; i++) {
-            for(int j = 0; j < parameters.i_decorrel; j++) {
-                  update_metropolis(&lattice, &parameters, &rng);
+      Magn magn;
+      Ene ene;
+
+      for(int i = 0; i < params.measures; i++) {
+            for(int j = 0; j < params.i_decorrel; j++) {
+                  update_metropolis(&lattice, &params, &rng);
+                  MC_step++;
             }
-            magnetization(&lattice, pOut);
-            energy(&lattice, pOut);
+            magn = magnetization(&lattice);
+            ene = energy(&lattice);
+            fprintf(pMeas, "%d\t %lf\t %lf\t %lf\t %lf\n", MC_step, magn.real, magn.img, magn.abs, ene);
       }
-      fclose(pOut);
+
+      fclose(pMeas);
 
       /*
       SAVING THE LATTICE CONFIGURATION AND RANDOM GENERATOR STATE
@@ -64,7 +74,7 @@ int main() {
       }
       fclose(pLatt);
 
-      ranfinish(&rng);
+      ranfinish(&rng, seed_file);
 
       clock_t end = clock();
       double cpu_time = ((double) (end - start)) / CLOCKS_PER_SEC;
