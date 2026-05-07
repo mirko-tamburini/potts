@@ -20,9 +20,8 @@
 #define EPS 1.2e-7
 #define RNMX (1.0-EPS)
 
-void ranstart(Ran2Generator *rng) {
-      FILE *pSeed;
-      pSeed = fopen("randomseed", "r");
+void ranstart(Ran2Generator *rng, const char *seed_file) {
+      FILE *pSeed = fopen(seed_file, "r");
 
       if(pSeed == NULL) {
             printf("Missing seed file.\n");
@@ -63,9 +62,8 @@ void ranstart(Ran2Generator *rng) {
       fclose(pSeed);
 }
 
-void ranfinish(Ran2Generator *rng) {
-      FILE *pSeed;
-      pSeed = fopen("randomseed", "w");
+void ranfinish(Ran2Generator *rng, const char *seed_file) {
+      FILE *pSeed = fopen(seed_file, "w");
 
       fprintf(pSeed, "%ld\n", rng->idum);
       fprintf(pSeed, "%ld\n", rng->idum2);

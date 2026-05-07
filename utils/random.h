@@ -8,8 +8,8 @@ typedef struct {
 } Ran2Generator;
 
 // Function prototypes
-void ranstart(Ran2Generator *rng);
-void ranfinish(Ran2Generator *rng);
+void ranstart(Ran2Generator *rng, const char *seed_file);
+void ranfinish(Ran2Generator *rng, const char *seed_file);
 double ran2(Ran2Generator *rng);
 
 #endif
