@@ -4,7 +4,15 @@
 #include <stdio.h>
 #include "config.h"
 
-void magnetization(Lattice *lattice, FILE *pOut);
-void energy(Lattice *lattice, FILE *pOut);
+typedef struct {
+      double real;
+      double img;
+      double abs;
+} Magn;
+
+typedef double Ene;
+
+Magn magnetization(Lattice *lattice);
+Ene energy(Lattice *lattice);
 
 #endif

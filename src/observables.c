@@ -1,7 +1,9 @@
 #include <math.h>
 #include "observables.h"
 
-void magnetization(Lattice *lattice, FILE *pOut) {
+Magn magnetization(Lattice *lattice) {
+      Magn magn;
+
       double xmagn_real = 0.0;
       double xmagn_imag = 0.0;
 
@@ -12,13 +14,16 @@ void magnetization(Lattice *lattice, FILE *pOut) {
                   xmagn_imag += sin(theta);
             }
       }
-      xmagn_real /= N_VOL;
-      xmagn_imag /= N_VOL;
-      double magn_abs = sqrt(xmagn_real * xmagn_real + xmagn_imag * xmagn_imag);
-      fprintf(pOut, "%lf %lf %lf ", xmagn_real, xmagn_imag, magn_abs);
+      magn.real = xmagn_real / N_VOL;
+      magn.img = xmagn_imag / N_VOL;
+      magn.abs = sqrt(pow(magn.real, 2.0) + pow(magn.img, 2.0));
+
+      return magn;
 }
 
-void energy(Lattice *lattice, FILE *pOut) {
+Ene energy(Lattice *lattice) {
+      Ene ene;
+
       double xene = 0.0;
       
       for(int i = 0; i < N_LATT; i++) {
@@ -37,6 +42,7 @@ void energy(Lattice *lattice, FILE *pOut) {
                   xene -= 0.5 * force;
             }
       }
-      xene /= N_VOL;
-      fprintf(pOut, "%lf\n", xene);
+      ene = xene / N_VOL;
+
+      return ene;
 }
